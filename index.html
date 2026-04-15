@@ -155,10 +155,10 @@
         <div class="max-w-xl mx-auto text-center">
             <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Get the Free Toolkit</h2>
             <p class="text-gray-500 mb-8">Enter your work email and we'll send all 6 resources straight to your inbox. No spam, unsubscribe any time.</p>
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4">
-                <input type="text" name="name" required placeholder="Your name"
+            <form id="toolkit-form" class="space-y-4" onsubmit="handleSubmit(event)">
+                <input type="text" id="form-name" name="name" required placeholder="Your name"
                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 bg-white">
-                <input type="email" name="email" required placeholder="Work email address"
+                <input type="email" id="form-email" name="email" required placeholder="Work email address"
                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 bg-white">
                 <select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-500 bg-white">
                     <option value="" disabled selected>Your role (optional)</option>
@@ -176,6 +176,33 @@
                 </button>
                 <p class="text-xs text-gray-400">No credit card. No software to install. Just the templates.</p>
             </form>
+
+            <!-- Download panel (hidden until form submitted) -->
+            <div id="download-panel" class="hidden mt-6 bg-white rounded-2xl shadow-lg p-8 text-center border border-green-200">
+                <div class="text-5xl mb-4">🎉</div>
+                <h3 class="text-2xl font-extrabold text-gray-900 mb-2">Your toolkit is ready!</h3>
+                <p id="welcome-msg" class="text-gray-500 mb-6">Thanks — click below to download all 6 resources in one Excel workbook.</p>
+                <a href="hr-hiring-toolkit.xlsx" download
+                   class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg hover:shadow-xl transition text-lg">
+                    ⬇ Download the HR Hiring Toolkit (.xlsx)
+                </a>
+                <p class="text-xs text-gray-400 mt-4">Excel or Google Sheets · 6 tabs · Ready to use today</p>
+            </div>
+
+            <script>
+            function handleSubmit(e) {
+                e.preventDefault();
+                var name = document.getElementById('form-name').value.trim();
+                document.getElementById('toolkit-form').classList.add('hidden');
+                document.getElementById('download-panel').classList.remove('hidden');
+                if (name) {
+                    document.getElementById('welcome-msg').textContent =
+                        'Thanks, ' + name + '! Click below to download all 6 resources in one Excel workbook.';
+                }
+                // Smooth scroll to download panel
+                document.getElementById('download-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            </script>
         </div>
     </section>
 
